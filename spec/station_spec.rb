@@ -2,21 +2,21 @@ require 'station'
 
 describe Station do
   
-  let(:Station) { described_class }
-  
-  it { is_expected.to respond_to(:zone) }
-
-  it { is_expected.to respond_to(:name) }
-
-  context "once initialized" do
-    euston = Station.new("Euston", 2)
+  describe "once initialized" do
+   before(:each) { euston = Station.new("Euston", 2) }
     
     describe "#name" do
-      expect(euston.name).to eq("Euston")
+      it 'returns the name' do
+        expect(euston.name).to eq("Euston")
+      end
+   
     end
 
     describe "#zone" do
-      expect(euston.zone).to eq 2
+      it 'returns the zone' do
+        expect(euston.zone).to eq 2
+      end
+      
     end
   
   end
