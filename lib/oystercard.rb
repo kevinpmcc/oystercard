@@ -1,12 +1,11 @@
 class Oystercard
 
   attr_reader :balance, :entry_station, :journeys
-  MIN_FARE = 1
   CARD_LIMIT = 90
   MAX_LIMIT_ERROR = "Balance would be above card limit"
   MIN_BAL_ERROR = "Balance is below minimum fare"
 
-  def initialize
+  def initialize(journey=Journey.new)
     @balance = 0
     @entry_station = nil
     @journeys = []
