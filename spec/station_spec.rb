@@ -1,24 +1,20 @@
 require 'station'
 
 describe Station do
-  
-  describe "once initialized" do
-   before(:each) { euston = Station.new("Euston", 2) }
-    
-    describe "#name" do
+
+  context 'once initialized' do
+    let(:euston) { described_class.new('Euston', 2) }
+
+    describe '#name' do
       it 'returns the name' do
-        expect(euston.name).to eq("Euston")
+        expect(euston.name).to eq 'Euston'
       end
-   
     end
 
-    describe "#zone" do
+    describe '#zone' do
       it 'returns the zone' do
-        expect(euston.zone).to eq 2
+        expect(euston.name).to eq 'Euston'
       end
-      
     end
-  
   end
-
 end
