@@ -3,6 +3,8 @@ class Oystercard
   attr_reader :balance, :entry_station, :journeys
   MIN_FARE = 1
   CARD_LIMIT = 90
+  MAX_LIMIT_ERROR = "Balance would be above card limit"
+  MIN_BAL_ERROR = "Balance is below minimum fare"
 
   def initialize
     @balance = 0
@@ -11,18 +13,21 @@ class Oystercard
   end
 
   def top_up(amount)
-    raise "TOO MUCH MONEY - limit is £#{CARD_LIMIT}" if balance + amount > CARD_LIMIT
+    raise MAX_LIMIT_ERROR if balance + amount > CARD_LIMIT
     @balance += amount
   end
 
   def touch_in(station)
-    raise "YOU TOO PO" if balance < MIN_FARE
+    raise MIN_BAL_ERROR if balance < MIN_FARE
     @entry_station = station
   end
 
-  def touch_out(station)
+  def touch_out(exit_station)
     deduct(MIN_FARE)
+    @journeys << { entry_station => exit_station }
+   # pass entry_station and station into a hashi
     @entry_station = nil
+   
   end
 
   def in_journey?
