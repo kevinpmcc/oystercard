@@ -5,7 +5,7 @@ describe Oystercard do
   let(:entry_station) { double :station }
   let(:exit_station)  { double :station }
   let(:card_limit) { Oystercard::CARD_LIMIT }
-  let(:min_fare) { Oystercard::MIN_FARE }
+  let(:journey) { double :journey }
 
   describe "#initialize" do
     it 'will begin with a balance of 0' do
