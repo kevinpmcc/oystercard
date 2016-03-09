@@ -3,7 +3,7 @@ require 'station'
 describe Station do
 
   context 'once initialized' do
-    let(:euston) { described_class.new('Euston', 2) }
+    let(:euston) { described_class.new(:name => 'Euston', :zone => 2) }
 
     describe '#name' do
       it 'returns the name' do
