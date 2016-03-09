@@ -34,6 +34,7 @@ describe Oystercard do
     
 
       describe "#touch_in" do
+   
         it 'saves the entry station' do 
           expect(oystercard.entry_station).to eq(entry_station)
         end
@@ -45,6 +46,7 @@ describe Oystercard do
       end
 
       describe "#touch_out" do
+   
         it 'ends the journey' do
           oystercard.touch_out(exit_station) 
           expect(oystercard).to_not be_in_journey
