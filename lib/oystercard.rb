@@ -1,17 +1,16 @@
 require_relative 'journey'
+require_relative 'station'
 
 class Oystercard
 
-  attr_reader :balance, :entry_station, :journeys
+  attr_reader :balance, :journeys
   CARD_LIMIT = 90
-  MAX_LIMIT_ERROR = "Balance would be above card limit"
-  MIN_BAL_ERROR = "Balance is below minimum fare"
+  MAX_LIMIT_ERROR = "Balance would be above card limit of £#{CARD_LIMIT}."
+  MIN_BAL_ERROR = "Balance is below minimum fare."
 
   def initialize(journey=Journey)
     @journey = journey
     @balance = 0
-    @entry_station = nil
-    @exit_station = nil
     @journeys = []
   end
 
@@ -21,13 +20,18 @@ class Oystercard
   end
 
   def touch_in(station)
-    raise MIN_BAL_ERROR if balance < Journey::MIN_FARE
-    
-    @journey.start_journey(station)
+    raise MIN_BAL_ERROR if balance < Journey::MIN_FARE 
+    current_journey = @journey.new
+    current_journey.start_journey(station)
+    @journeys << current_journey
   end
 
   def touch_out(exit_station)
-    @journey.end_journey(exit_station) 
+    if !in_journey?
+      current_journey = @journey.new
+      @journeys << current_journey
+    end
+    @journeys[-1].end_journey(exit_station) 
   end
 
   def in_journey?

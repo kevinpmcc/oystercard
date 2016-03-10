@@ -15,13 +15,6 @@ describe Journey do
       journey.start_journey("Bank")
       expect(journey.entry_station).to eq "Bank" 
     end
-
-
-    it "will add the penalise amount to journey fare when entry_station exists" do
-      journey.start_journey("Waterloo")
-      expect(journey.journey_fare).to eq Journey::PENALTY_FARE
-      journey.start_journey("Bank")
-    end
   
   end
   
@@ -30,6 +23,25 @@ describe Journey do
     it 'will store the exit_station given' do
       journey.end_journey("Euston")
       expect(journey.exit_station).to eq "Euston"
+    end
+  
+  end
+  describe '#fare' do
+  
+    it 'when journey is complete return MIN_FARE' do
+      journey.start_journey("Euston")
+      journey.end_journey("Bank")
+      expect(journey.fare).to eq Journey::MIN_FARE
+    end
+
+    it 'when only exit station exists returns PENALTY_FARE' do
+      journey.end_journey("Bank")
+      expect(journey.fare).to eq Journey::PENALTY_FARE
+    end
+
+    it 'when only entry station exists returns PENALTY_FARE' do
+      journey.start_journey("Euston")
+      expect(journey.fare).to eq Journey::PENALTY_FARE
     end
   
   end
