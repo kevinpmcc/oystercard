@@ -2,7 +2,8 @@ require 'oystercard'
 
 describe Oystercard do
 
-  subject(:oystercard) { described_class.new }
+  let(:journey_class) { double(:journey_class) }
+  subject(:oystercard) { described_class.new(journey_class) }
   let(:station_in) { double(:Station) }
   let(:station_out) { double(:Station) }
   balance = described_class::MAX_BALANCE
@@ -13,9 +14,9 @@ describe Oystercard do
       expect(oystercard.balance).to be_zero
     end
 
-    it 'expects #in_journey? to be false' do
-      expect(oystercard).not_to be_in_journey
-    end
+    # it 'expects #in_journey? to be false' do
+    #   expect(oystercard).not_to be_in_journey
+    # end
 
     it 'expects #history to be empty' do
       expect(oystercard.history).to be_empty
@@ -41,10 +42,10 @@ describe Oystercard do
 
   describe '#touch_in' do
 
-    it 'changes the state of #in_journey? to true' do
-      oystercard.top_up(min_fare)
-      expect { oystercard.touch_in station_in }.to change { oystercard.in_journey? }.to true
-    end
+    # it 'changes the state of #in_journey? to true' do
+    #   oystercard.top_up(min_fare)
+    #   expect { oystercard.touch_in station_in }.to change { oystercard.in_journey? }.to true
+    # end
 
     it 'raises an error if balance is not sufficent for single journey' do
       message = "Not enough funds"
@@ -52,11 +53,11 @@ describe Oystercard do
     end
   end
 
-  describe '#in_journey?' do
-    it 'should never be nil' do
-      expect(oystercard.in_journey?).to satisfy { |result| result == true || result == false }
-    end
-  end
+  # describe '#in_journey?' do
+  #   it 'should never be nil' do
+  #     expect(oystercard.in_journey?).to satisfy { |result| result == true || result == false }
+  #   end
+  # end
 
   describe '#touch_out' do
     it 'changes the balance' do

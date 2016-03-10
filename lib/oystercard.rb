@@ -7,9 +7,10 @@ class Oystercard
   MAX_BALANCE = 90
   MIN_FARE = 1
 
-  def initialize
+  def initialize(journey_class: journey_class)
     @balance = 0
     @history = []
+    @journey_class = journey_class
     @current_journey = {}
   end
 
@@ -21,13 +22,14 @@ class Oystercard
 
   def touch_in(station)
     sufficent_funds?
+    @journey = @journey_class.new
     @entry_station = station
     @current_journey[:entry_station] = station
   end
 
-  def in_journey?
-    !!@entry_station
-  end
+  # def in_journey?
+  #   !!@entry_station
+  # end
 
   def touch_out(station)
     deduct MIN_FARE
