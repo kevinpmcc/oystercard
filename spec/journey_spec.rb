@@ -22,11 +22,6 @@ describe Journey do
   end
   describe '#fare' do
   
-    it 'when journey is complete return MIN_FARE' do
-      journey.start_at("Euston")
-      journey.end_at("Bank")
-      expect(journey.fare).to eq Journey::MIN_FARE
-    end
 
     it 'when only exit station exists returns PENALTY_FARE' do
       journey.end_at("Bank")

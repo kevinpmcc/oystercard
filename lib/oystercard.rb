@@ -1,4 +1,4 @@
-
+require_relative 'journey'
 require_relative 'journeylog'
 require_relative 'station'
 
@@ -16,7 +16,7 @@ class Oystercard
 
   def top_up(amount)
     raise MAX_LIMIT_ERROR if balance + amount > CARD_LIMIT
-    @balance += amount
+    action_top_up(amount)
   end
 
   def touch_in(station)
@@ -38,7 +38,11 @@ class Oystercard
 private
 
 attr_reader :in_journey
+  def action_top_up(amount)
+    @balance += amount
+  end
 
+  
   def deduct(amount)
     @balance -= amount
   end

@@ -1,25 +1,22 @@
+require 'pry'
 require './lib/oystercard'
+require './lib/station'
 
-p oyster = Oystercard.new
-p "balance"
-p oyster.balance
-p "topup90"
-p oyster.top_up(90)
-p "injourney"
-p oyster.in_journey?
-p "touchin"
-p oyster.touch_in("station")
-p "entry_station"
-p oyster.entry_station
-p "touch_out"
-p oyster.touch_out("station2")
-p "journeys"
-p oyster.journeys
+station1 = Station.new "Waterloo", 1
+station2 = Station.new "Holloway Road", 2
+station3 = Station.new "Seven Sisters", 3
+station4 = Station.new "Richmond", 4
+station5 = Station.new "Heathrow", 5
 
-
-p oyster.entry_station
-p "injourney"
-p oyster.in_journey?
-p "history"
+ oyster = Oystercard.new
+ "balance"
+ oyster.balance
+ "topup90"
+ oyster.top_up(90)
+ "touchin"
+ binding.pry
+ oyster.touch_in(station1)
+ oyster.touch_out(station2)
+ binding.pry
 #p oyster.journey_history
 

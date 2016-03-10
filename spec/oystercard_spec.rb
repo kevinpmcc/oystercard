@@ -21,15 +21,6 @@ describe Oystercard do
       oystercard.top_up(card_limit)
     end    
 
-      describe "#touch_out" do
-   
-
-      it 'touching out reduces the balance' do
-        oystercard.touch_in(entry_station)
-        expect{ oystercard.touch_out(exit_station) }.to change{ oystercard.balance }.by -(Journey::MIN_FARE)
-      end
-
-    end    
     
     describe "#top_up" do
     
