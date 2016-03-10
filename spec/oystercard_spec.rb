@@ -15,18 +15,9 @@ describe Oystercard do
       expect(oystercard.balance).to be_zero
     end
 
-    # it 'expects #in_journey? to be false' do
-    #   expect(oystercard).not_to be_in_journey
-    # end
-
     it 'expects #history to be empty' do
       expect(oystercard.history).to be_empty
     end
-  end
-
-  describe '#balance' do
-    # it { is_expected.to respond_to(:balance) }
-    # it { is_expected.to respond_to(:top_up).with(1).argument }
   end
 
   describe '#top_up' do

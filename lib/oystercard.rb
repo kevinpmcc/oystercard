@@ -1,5 +1,5 @@
 class Oystercard
-  attr_reader :balance, :history, :journey_class
+  attr_reader :balance, :history
 
   MAX_BALANCE = 90
   MIN_FARE = 1
@@ -7,10 +7,8 @@ class Oystercard
   def initialize(journey_klass: Journey)
     @balance = 0
     @history = []
-    # @journey_class = journey_klass
-    @journey_klass = journey_klass
-    @journey = nil
-    @station = nil
+    @journey_class = journey_klass
+    @journey, @station = nil
   end
 
   def top_up(amount)
@@ -40,7 +38,7 @@ class Oystercard
   end
 
   def create_journey(station)
-      @journey ||= @journey_klass.new(station)
+      @journey ||= @journey_class.new(station)
   end
 
 
@@ -55,15 +53,10 @@ class Oystercard
 
   def complete
     @history << @journey
-    @station = nil
-    @journey = nil
+    @station, @journey = nil
   end
 
   def exceeds_max_balance?(amount)
     balance + amount > MAX_BALANCE
   end
-
-  # def log_journey station
-  #   @history << { entry_station: @entry_station, exit_station: station }
-  # end
 end
