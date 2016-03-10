@@ -4,11 +4,13 @@ class Oystercard
   MAX_BALANCE = 90
   MIN_FARE = 1
 
-  def initialize(journey_klass: Journey)
+  def initialize(journey_klass=Journey)
     @balance = 0
     @history = []
-    @journey_class = journey_klass
-    @current_journey = {}
+    # @journey_class = journey_klass
+    @journey_klass = journey_klass
+    @journey = nil
+    @station = nil
   end
 
   def top_up(amount)
@@ -19,22 +21,28 @@ class Oystercard
 
   def touch_in(station)
     sufficent_funds?
-    @journey = @journey_class.new
-    @journey.start(station)
+    create_journey(station)
+    deduct(@journey.fare) if in_journey?
+    @station = station
   end
 
-  # def in_journey?
-  #   !!@entry_station
-  # end
-
   def touch_out(station)
-    deduct MIN_FARE
-    @current_journey[:exit_station] = station
+    create_journey(station)
+    @journey.end(station)
+    deduct(@journey.fare)
     complete
-    @entry_station = nil
   end
 
   private
+
+  def in_journey?
+    !!@station
+  end
+
+  def create_journey(station)
+      @journey ||= @journey_klass.new(station)
+  end
+
 
   def deduct(amount)
     @balance -= amount
@@ -46,8 +54,9 @@ class Oystercard
   end
 
   def complete
-    @history << @current_journey
-    @current_journey = {}
+    @history << @journey
+    @station = nil
+    @journey = nil
   end
 
   def exceeds_max_balance?(amount)
