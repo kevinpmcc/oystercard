@@ -9,12 +9,12 @@ class Journey
     @exit_station = nil
   end
   
-  def start_journey(entry_station)
-      set_entry_station(entry_station)
+  def start(at_station)
+      set_entry_station(at_station)
   end
 
-  def end_journey(exit_station)
-    set_exit_station(exit_station)
+  def end(at_station)
+    set_exit_station(at_station)
   end
 
   def fare
@@ -25,17 +25,11 @@ private
    
   def set_exit_station(exit_station)
     @exit_station = exit_station
-   # in_journey = false
   end
 
   def set_entry_station(entry_station)
     @entry_station = entry_station
-   # in_journey = true
   end
   
 end
-    #set journey full journey with current @entry_station
-    #
-    #set @entry_station to nil
-    #call start_journey(entry_journey)
- 
+

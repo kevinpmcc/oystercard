@@ -23,7 +23,7 @@ class Oystercard
   def touch_in(station)
     raise MIN_BAL_ERROR if balance < Journey::MIN_FARE 
     current_journey = @journey.new
-    current_journey.start_journey(station)
+    current_journey.start(station)
     @journeys << current_journey
     @in_journey = true
   end
@@ -33,13 +33,14 @@ class Oystercard
       current_journey = @journey.new
       @journeys << current_journey
     end
-    @journeys[-1].end_journey(exit_station) 
+    @journeys[-1].end(exit_station) 
     deduct(@journeys[-1].fare)
     @in_journey = false
   end
 
     
 private
+
 attr_reader :in_journey
 
   def deduct(amount)

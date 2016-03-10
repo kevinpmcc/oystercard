@@ -1,9 +1,7 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-ruby '2.2.1'
-
-gem 'rspec'
+ruby "2.3.0"
 
 group :development, :test do
-	gem "rspec"
+  gem "rspec"
 end

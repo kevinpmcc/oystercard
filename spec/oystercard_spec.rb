@@ -8,6 +8,7 @@ describe Oystercard do
   let(:journey) { double :journey }
 
   describe "#initialize" do
+  	
     it 'will begin with a balance of 0' do
       expect(oystercard.balance).to eq 0
     end
@@ -15,25 +16,14 @@ describe Oystercard do
     it 'will begin with an empty journey_history' do
       expect(oystercard.journeys).to eq []
     end
+
   end
   
   context 'when topped up' do
     
     before(:each) do
       oystercard.top_up(card_limit)
-    end
-
-
-       
-    
-
-      describe "#touch_in" do
-   
-        it 'creates a new journey' do
-          expect{ oystercard.touch_in(entry_station) }.to change{ oystercard.journeys.size }.by 1
-        end
-      
-      end
+    end    
 
       describe "#touch_out" do
    
@@ -66,8 +56,7 @@ describe Oystercard do
         expect(oystercard.journeys.size).to eq 1
       end
 
-    end
-  
+    end 
   
   end
   
