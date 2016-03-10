@@ -66,8 +66,9 @@ describe Oystercard do
     it 'logs journey history' do
       oystercard.top_up(min_fare)
       oystercard.touch_in station_in
+      oystercard.touch_out station_out
       journey = { entry_station: station_in, exit_station: station_out }
-      expect{ oystercard.touch_out station_out }.to change { oystercard.history }.to include journey
+      expect( oystercard.history ).to include journey
     end
   end
 
