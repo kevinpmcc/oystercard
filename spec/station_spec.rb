@@ -3,7 +3,7 @@ require 'station'
 describe Station do
 
   context 'once initialized' do
-    let(:euston) { described_class.new(:name => 'Euston', :zone => 2) }
+    let(:euston) { described_class.new('Euston',1) }
 
     describe '#name' do
       it 'returns the name' do
@@ -13,7 +13,7 @@ describe Station do
 
     describe '#zone' do
       it 'returns the zone' do
-        expect(euston.name).to eq 'Euston'
+        expect(euston.zone).to eq 1
       end
     end
   end

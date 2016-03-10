@@ -12,6 +12,7 @@ class Oystercard
     @journey = journey
     @balance = 0
     @journeys = []
+    @in_journey = false
   end
 
   def top_up(amount)
@@ -24,39 +25,25 @@ class Oystercard
     current_journey = @journey.new
     current_journey.start_journey(station)
     @journeys << current_journey
+    @in_journey = true
   end
 
   def touch_out(exit_station)
-    if !in_journey?
+    if !in_journey
       current_journey = @journey.new
       @journeys << current_journey
     end
     @journeys[-1].end_journey(exit_station) 
+    deduct(@journeys[-1].fare)
+    @in_journey = false
   end
 
-  def in_journey?
-    !!entry_station
-  end
-
-
+    
 private
+attr_reader :in_journey
 
   def deduct(amount)
     @balance -= amount
   end
   
-  def penalise
-    p @entry_station
-    set_journey
-    deduct(PENALTY_FARE)
-  end
-
-  def set_journey
-    p @entry_station
-    @journeys << { @entry_station => @exit_station }
-  end
-
-  def set_exit_station(exit_station)
-    @exit_station = exit_station
-  end
 end

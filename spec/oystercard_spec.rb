@@ -12,10 +12,6 @@ describe Oystercard do
       expect(oystercard.balance).to eq 0
     end
 
-    it 'will begin with a nil entry station' do
-      expect(oystercard.entry_station).to eq nil
-    end
-
     it 'will begin with an empty journey_history' do
       expect(oystercard.journeys).to eq []
     end
@@ -28,43 +24,30 @@ describe Oystercard do
     end
 
 
-    context "and touched in" do
        
-      before(:each) { oystercard.touch_in(entry_station) }
     
 
       describe "#touch_in" do
    
-        it 'saves the entry station' do 
-          expect(oystercard.entry_station).to eq(entry_station)
-        end
-
-        it 'changes in_journey to true' do
-          expect(oystercard).to be_in_journey
+        it 'creates a new journey' do
+          expect{ oystercard.touch_in(entry_station) }.to change{ oystercard.journeys.size }.by 1
         end
       
       end
 
       describe "#touch_out" do
    
-        it 'ends the journey' do
-          oystercard.touch_out(exit_station) 
-          expect(oystercard).to_not be_in_journey
-        end
-      
-      end
-      
-        it 'forgets entry station on touching out' do
-          oystercard.touch_out(exit_station)
-          expect(oystercard.entry_station).to eq nil
-        end
+        it 'will create a new journey when there is no touch in' do
+          expect{ oystercard.touch_out(exit_station) }.to change{ oystercard.journeys.size }.by 1
+        end 
+
+
+      it 'touching out reduces the balance' do
+        oystercard.touch_in(entry_station)
+        expect{ oystercard.touch_out(exit_station) }.to change{ oystercard.balance }.by -(Journey::MIN_FARE)
       end
 
-      it 'deducts the fare' do
-        expect{ oystercard.touch_out(exit_station) }.to change{ oystercard.balance }.by -(min_fare)
-      end
-
-    
+    end    
     
     describe "#top_up" do
     
@@ -84,6 +67,7 @@ describe Oystercard do
       end
 
     end
+  
   
   end
   
