@@ -9,12 +9,12 @@ class Journey
     @exit_station = nil
   end
   
-  def start(at_station)
-      set_entry_station(at_station)
+  def start_at(station)
+      set_entry_station(station)
   end
 
-  def end(at_station)
-    set_exit_station(at_station)
+  def end_at(station)
+    set_exit_station(station)
   end
 
   def fare

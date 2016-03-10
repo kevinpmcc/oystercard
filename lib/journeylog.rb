@@ -11,12 +11,12 @@ class JourneyLog
 
 	def start(at_station)
 		current_journey = @journey_class.new
-    	current_journey.start(at_station)
+    	current_journey.start_at(at_station)
     	@journeys << current_journey
 	end
 
 	def finish(at_station)
-		current_journey.end(at_station)
+		current_journey.end_at(at_station)
 	end
 
 	private

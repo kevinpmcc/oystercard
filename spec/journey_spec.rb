@@ -6,7 +6,7 @@ describe Journey do
   describe '#start_journey' do
     
     it 'will store the entry_station given' do
-      journey.start("Bank")
+      journey.start_at("Bank")
       expect(journey.entry_station).to eq "Bank" 
     end
   
@@ -15,7 +15,7 @@ describe Journey do
   describe '#end_journey' do
 
     it 'will store the exit_station given' do
-      journey.end("Euston")
+      journey.end_at("Euston")
       expect(journey.exit_station).to eq "Euston"
     end
   
@@ -23,18 +23,18 @@ describe Journey do
   describe '#fare' do
   
     it 'when journey is complete return MIN_FARE' do
-      journey.start("Euston")
-      journey.end("Bank")
+      journey.start_at("Euston")
+      journey.end_at("Bank")
       expect(journey.fare).to eq Journey::MIN_FARE
     end
 
     it 'when only exit station exists returns PENALTY_FARE' do
-      journey.end("Bank")
+      journey.end_at("Bank")
       expect(journey.fare).to eq Journey::PENALTY_FARE
     end
 
     it 'when only entry station exists returns PENALTY_FARE' do
-      journey.start("Euston")
+      journey.start_at("Euston")
       expect(journey.fare).to eq Journey::PENALTY_FARE
     end
   
