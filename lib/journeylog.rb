@@ -10,9 +10,9 @@ class JourneyLog
 	end
 
 	def start(at_station)
-		current_journey = @journey_class.new
-    	current_journey.start_at(at_station)
-    	@journeys << current_journey
+		my_journey = @journey_class.new
+    	my_journey.start_at(at_station)
+    	@journeys << my_journey
 	end
 
 	def finish(at_station)
@@ -22,10 +22,10 @@ class JourneyLog
 	private
 
 	def current_journey
-		if @journeys.last.entry_station
-			@journeys.last
+		if @journeys.empty? || @journeys.last.exit_station
+			@journeys << @journey_class.new
 		end
-
+		@journeys.last
 	end
 
 end
