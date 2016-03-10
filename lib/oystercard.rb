@@ -1,4 +1,5 @@
-require_relative 'journey'
+
+require_relative 'journeylog'
 require_relative 'station'
 
 class Oystercard
@@ -8,11 +9,9 @@ class Oystercard
   MAX_LIMIT_ERROR = "Balance would be above card limit of £#{CARD_LIMIT}."
   MIN_BAL_ERROR = "Balance is below minimum fare."
 
-  def initialize(journey=Journey)
-    @journey = journey
+  def initialize(journeylog=JourneyLog)
+    @journeylog = journeylog.new
     @balance = 0
-    @journeys = []
-    @in_journey = false
   end
 
   def top_up(amount)
@@ -22,20 +21,17 @@ class Oystercard
 
   def touch_in(station)
     raise MIN_BAL_ERROR if balance < Journey::MIN_FARE 
-    current_journey = @journey.new
-    current_journey.start_at(station)
-    @journeys << current_journey
-    @in_journey = true
+    if @journeylog.history != []
+      if !@journeylog.history[-1].exit_station 
+        deduct(@journeylog.history[-1].fare)
+      end
+    end
+    @journeylog.start(station)
   end
 
   def touch_out(exit_station)
-    if !in_journey
-      current_journey = @journey.new
-      @journeys << current_journey
-    end
-    @journeys[-1].end_at(exit_station) 
-    deduct(@journeys[-1].fare)
-    @in_journey = false
+    @journeylog.finish(exit_station) 
+    deduct(@journeylog.history[-1].fare)
   end
 
     

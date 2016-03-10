@@ -2,7 +2,6 @@ require_relative 'journey'
 
 class JourneyLog
 
-	attr_reader :journeys
 
 	def initialize(journey_class=Journey)
 		@journey_class = journey_class
@@ -19,7 +18,12 @@ class JourneyLog
 		current_journey.end_at(at_station)
 	end
 
+  def history
+    @journeys.dup
+  end
+
 	private
+  attr_reader :journeys
 
 	def current_journey
 		if @journeys.empty? || @journeys.last.exit_station

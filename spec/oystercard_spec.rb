@@ -13,10 +13,6 @@ describe Oystercard do
       expect(oystercard.balance).to eq 0
     end
 
-    it 'will begin with an empty journey_history' do
-      expect(oystercard.journeys).to eq []
-    end
-
   end
   
   context 'when topped up' do
@@ -27,10 +23,6 @@ describe Oystercard do
 
       describe "#touch_out" do
    
-        it 'will create a new journey when there is no touch in' do
-          expect{ oystercard.touch_out(exit_station) }.to change{ oystercard.journeys.size }.by 1
-        end 
-
 
       it 'touching out reduces the balance' do
         oystercard.touch_in(entry_station)
@@ -48,17 +40,8 @@ describe Oystercard do
   
     end
   
-    describe "#journeys" do
-
-      it "stores journey history" do
-        oystercard.touch_in(entry_station)
-        oystercard.touch_out(exit_station)
-        expect(oystercard.journeys.size).to eq 1
-      end
-
-    end 
-  
   end
+  
   
   context "with empty balance" do
     
@@ -79,6 +62,5 @@ describe Oystercard do
     end
 
   end
-
 end
 
