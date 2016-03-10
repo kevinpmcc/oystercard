@@ -1,16 +1,13 @@
-
-
 class Oystercard
-
-  attr_reader :balance, :history
+  attr_reader :balance, :history, :journey_class
 
   MAX_BALANCE = 90
   MIN_FARE = 1
 
-  def initialize(journey_class: journey_class)
+  def initialize(journey_klass: Journey)
     @balance = 0
     @history = []
-    @journey_class = journey_class
+    @journey_class = journey_klass
     @current_journey = {}
   end
 
@@ -23,8 +20,7 @@ class Oystercard
   def touch_in(station)
     sufficent_funds?
     @journey = @journey_class.new
-    @entry_station = station
-    @current_journey[:entry_station] = station
+    @journey.start(station)
   end
 
   # def in_journey?
@@ -45,7 +41,7 @@ class Oystercard
   end
 
   def sufficent_funds?
-    message = "Not enough funds"
+    message = 'Not enough funds'
     raise message if @balance < MIN_FARE
   end
 

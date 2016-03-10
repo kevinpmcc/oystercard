@@ -1,16 +1,15 @@
 require 'oystercard'
 
 describe Oystercard do
-
-  let(:journey_class) { double(:journey_class) }
-  subject(:oystercard) { described_class.new(journey_class) }
+  let(:journey) { double(:journey) }
+  subject(:oystercard) { described_class.new(journey_klass: journey) }
   let(:station_in) { double(:Station) }
   let(:station_out) { double(:Station) }
   balance = described_class::MAX_BALANCE
   min_fare = described_class::MIN_FARE
 
   describe '#initialization' do
-    it "expect #balance to be 0" do
+    it 'expect #balance to be 0' do
       expect(oystercard.balance).to be_zero
     end
 
@@ -23,32 +22,30 @@ describe Oystercard do
     end
   end
 
-  describe '#balance'do
-    #it { is_expected.to respond_to(:balance) }
-    #it { is_expected.to respond_to(:top_up).with(1).argument }
-
+  describe '#balance' do
+    # it { is_expected.to respond_to(:balance) }
+    # it { is_expected.to respond_to(:top_up).with(1).argument }
   end
 
   describe '#top_up' do
     it 'can top up balance' do
-      expect{ oystercard.top_up balance }.to change{ oystercard.balance }.by balance
+      expect { oystercard.top_up balance }.to change { oystercard.balance }.by balance
     end
 
     it 'fails if topup exceeds maximum balance' do
       message = "Top up exceeds the maximum balance of #{balance}"
-      expect{ oystercard.top_up(balance + min_fare) }.to raise_error message
+      expect { oystercard.top_up(balance + min_fare) }.to raise_error message
     end
   end
 
   describe '#touch_in' do
-
     # it 'changes the state of #in_journey? to true' do
     #   oystercard.top_up(min_fare)
     #   expect { oystercard.touch_in station_in }.to change { oystercard.in_journey? }.to true
     # end
 
     it 'raises an error if balance is not sufficent for single journey' do
-      message = "Not enough funds"
+      message = 'Not enough funds'
       expect { oystercard.touch_in station_in }.to raise_error message
     end
   end
@@ -61,16 +58,16 @@ describe Oystercard do
 
   describe '#touch_out' do
     it 'changes the balance' do
-      expect{ oystercard.touch_out station_out }.to change{ oystercard.balance }.by -min_fare
+      expect { oystercard.touch_out station_out }.to change { oystercard.balance }.by -min_fare
     end
 
     it 'logs journey history' do
       oystercard.top_up(min_fare)
+      allow(journey).to receive(:new)
+      allow(journey).to receive(:start)
       oystercard.touch_in station_in
       oystercard.touch_out station_out
-      journey = { entry_station: station_in, exit_station: station_out }
-      expect( oystercard.history ).to include journey
+      expect(oystercard.history).to include journey
     end
   end
-
 end
