@@ -4,7 +4,7 @@ class Oystercard
   MAX_BALANCE = 90
   MIN_FARE = 1
 
-  def initialize(journey_klass=Journey)
+  def initialize(journey_klass: Journey)
     @balance = 0
     @history = []
     # @journey_class = journey_klass

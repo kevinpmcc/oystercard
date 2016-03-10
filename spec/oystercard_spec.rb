@@ -4,7 +4,8 @@ describe Oystercard do
   let(:journey) { double(:journey) }
   subject(:oystercard) { described_class.new(journey_klass: journey) }
   let(:station_in) { double(:Station) }
-  before(:each) { allow(journey).to receive(:new).and_return(journey) }
+  before(:each) { allow(journey).to receive(:new).and_return(journey)
+  allow(journey).to receive(:fare).and_return(described_class::MIN_FARE) }
   let(:station_out) { double(:Station) }
   balance = described_class::MAX_BALANCE
   min_fare = described_class::MIN_FARE
