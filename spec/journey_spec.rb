@@ -2,7 +2,7 @@ require 'journey'
 
 describe Journey do
 
-  subject(:journey){ described_class.new station_in}
+  subject(:journey){ described_class.new station_in }
   let(:station_in) { double(:Station, zone: 1) }
   let(:station_out) { double(:Station, zone: 3) }
 
