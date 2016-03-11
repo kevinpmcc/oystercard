@@ -4,11 +4,10 @@ class Oystercard
   MAX_BALANCE = 90
   MIN_FARE = 1
 
-  def initialize(journey_klass: Journey)
+  def initialize(journey_log_klass: JourneyLog)
     @balance = 0
-    @history = [] 
-    @journey_class = journey_klass
-    @journey, @station = nil
+    @station = nil
+    @journey_log = journey_log_klass.new
   end
 
   def top_up(amount)
@@ -19,29 +18,28 @@ class Oystercard
 
   def touch_in(station)
     sufficent_funds?
-    create_journey(station)
-    @history << @journey
-    deduct(@journey.fare) if in_journey?
-    @station = station
+    deduct (calculate_fare) if no_exit_station?
+    @journey_log.start(station)
   end
 
   def touch_out(station)
-    create_journey
-    @journey.end(station)
-    deduct(@journey.fare)
-    complete
+    @journey_log.finish(station)
+    deduct(calculate_fare)
+  end
+
+  def history
+    @journey_log.journeys
   end
 
   private
 
-  def in_journey?
-    @history.last.complete?
+  def no_exit_station?
+    @journey_log.no_exit_station?
   end
 
-  def create_journey(station=nil)
-      @journey ||= @journey_class.new(station)
+  def calculate_fare
+    @journey_log.last_journey.fare
   end
-
 
   def deduct(amount)
     @balance -= amount
@@ -51,11 +49,6 @@ class Oystercard
     message = 'Not enough funds'
     raise message if @balance < MIN_FARE
   end
-
-  # def complete
-  #   @history << @journey if @journey
-  #   @station, @journey = nil
-  # end
 
   def exceeds_max_balance?(amount)
     balance + amount > MAX_BALANCE

@@ -15,9 +15,21 @@ class JourneyLog
     @history << @journey_class.new if has_exit_station?
     last_journey
   end
-  
+
   def finish(station)
     current_journey.end_journey(station)
+  end
+
+  def no_exit_station?
+    !has_exit_station?
+  end
+
+  def last_journey
+    @history.last
+  end
+
+  def journeys
+    @history.dup
   end
 
   private
@@ -30,7 +42,4 @@ class JourneyLog
     empty_history? || last_journey.exit_station?
   end
 
-  def last_journey
-    @history.last
-  end
 end

@@ -6,11 +6,6 @@ describe JourneyLog do
   let(:journey) { double(:journey) }
   let(:station_in) { double(:station_in)}
   let(:station_out) { double(:station_out)}
-  # describe '#initialize' do
-  #   it 'initialises with a factory' do
-  #     allow(:journey_class).to receive(:new)
-  #     expect()
-  # end
 
   describe '#start' do
     it "creates an instance of journey" do
@@ -28,12 +23,18 @@ describe JourneyLog do
       journeylog.current_journey
     end
 
+    it "records the journey" do
+      allow(journey_class).to receive(:new).with(station_in).and_return(journey)
+      journeylog.start(station_in)
+      expect(journeylog.journeys).to include journey
+    end
+
     it "returns the current journey when incomplete" do
       allow(journeylog).to receive(:has_exit_station?){false}
       allow(journeylog).to receive(:last_journey){journey}
       expect(journeylog.current_journey).to eq journey
     end
-  
+
   end
 
   describe "#finish" do
