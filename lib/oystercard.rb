@@ -25,7 +25,7 @@ class Oystercard
   end
 
   def touch_out(station)
-    create_journey(station)
+    create_journey
     @journey.end(station)
     deduct(@journey.fare)
     complete
@@ -37,7 +37,7 @@ class Oystercard
     !!@station
   end
 
-  def create_journey(station)
+  def create_journey(station=nil)
       @journey ||= @journey_class.new(station)
   end
 
