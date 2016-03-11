@@ -6,7 +6,7 @@ class Oystercard
 
   def initialize(journey_klass: Journey)
     @balance = 0
-    @history = []
+    @history = [] 
     @journey_class = journey_klass
     @journey, @station = nil
   end
@@ -20,6 +20,7 @@ class Oystercard
   def touch_in(station)
     sufficent_funds?
     create_journey(station)
+    @history << @journey
     deduct(@journey.fare) if in_journey?
     @station = station
   end
@@ -34,7 +35,7 @@ class Oystercard
   private
 
   def in_journey?
-    !!@station
+    @history.last.complete?
   end
 
   def create_journey(station=nil)
@@ -51,10 +52,10 @@ class Oystercard
     raise message if @balance < MIN_FARE
   end
 
-  def complete
-    @history << @journey
-    @station, @journey = nil
-  end
+  # def complete
+  #   @history << @journey if @journey
+  #   @station, @journey = nil
+  # end
 
   def exceeds_max_balance?(amount)
     balance + amount > MAX_BALANCE

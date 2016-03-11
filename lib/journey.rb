@@ -29,6 +29,7 @@ class Journey
     MIN_FARE
   end
 
-  # def current_journey
-  # end
+  def exit_station?
+    !!@exit_station
+  end
 end
