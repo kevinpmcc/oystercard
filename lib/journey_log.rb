@@ -15,6 +15,10 @@ class JourneyLog
     @history << @journey_class.new if has_exit_station?
     last_journey
   end
+  
+  def finish(station)
+    current_journey.end_journey(station)
+  end
 
   private
 
