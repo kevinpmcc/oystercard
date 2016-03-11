@@ -1,6 +1,7 @@
 
 Makers Academy week 2 - Oystercard Challenge
 
+The code in this project was based on the following user stories.
 
 ```
 In order to use public transport
