@@ -21,7 +21,7 @@ describe Oystercard do
       oystercard.top_up(card_limit)
     end    
 
-    
+ 
     describe "#top_up" do
     
       it 'will raise if balance will be greater than card limit' do

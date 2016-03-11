@@ -23,7 +23,7 @@ describe Journey do
   describe '#fare' do
   
 
-    it 'when only exit station exists returns PENALTY_FARE' do
+  it 'when only exit station exists returns PENALTY_FARE' do
       journey.end_at("Bank")
       expect(journey.fare).to eq Journey::PENALTY_FARE
     end
